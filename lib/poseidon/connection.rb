@@ -102,7 +102,7 @@ module Poseidon
     def ensure_connected
       if @socket.nil? || @socket.closed?
         begin
-          @socket = TCPSocket.new(@host, @port)
+          @socket = Socket.tcp(@host, @port, connect_timeout: @socket_timeout_ms / 1000.0)
         rescue SystemCallError
           raise_connection_failed_error
         end
